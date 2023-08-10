@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+.App {
+  font-family: sans-serif;
+  
+}
+h1 {
+  font-size: 6rem;
+}
+p {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 5rem;
+}
+
+.section-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+img {
+  width: 500px;
+}
+
+.right {
+  width: 40%;
+  padding: 2rem;
+}
+
+.right p {
+  font-size: 1.2rem;
+}

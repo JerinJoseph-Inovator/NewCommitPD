@@ -1,0 +1,37 @@
+body {
+  color: white;
+}
+
+.homeContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: rgb(77, 81, 125);
+  background: radial-gradient(circle, rgba(77, 81, 125, 1) 33%, rgba(52, 49, 107, 1) 61%, rgba(46, 61, 80, 1) 88%, rgba(53, 65, 112, 1) 100%);
+}
+
+.buttonsContainer {
+  margin: 100px 0;
+  padding-inline: 100;
+}
+
+.uploadsBtnContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uploadImageContainer {
+  min-height: 350px;
+  display: grid;
+  place-items: center;
+}
+
+.file-upload-div{
+  width: 300px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+}

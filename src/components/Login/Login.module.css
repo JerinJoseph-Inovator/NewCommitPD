@@ -1,0 +1,136 @@
+
+.container {
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  /* background: linear-gradient(to right, #9900ff, #cc80ff); */
+  background-image: url(./marc-olivier-jodoin-TStNU7H4UEE-unsplash.jpg); 
+  backdrop-filter: le;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: top 0;
+
+  /* background-color: ; */
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.innerBox {
+  min-width: 480px;
+  height: fit-content;
+  width: fit-content;
+  margin-left: 2%;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, .2);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer .error {
+  font-weight: bold;
+  font-size: 0.875rem;
+  color: #ff3300;
+  text-align: center;
+}
+
+.footer button {
+  outline: none;
+  border: none;
+  background-color: #9900ff;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 10px 16px;
+  width: 100%;
+  transition: 100ms;
+  cursor: pointer;
+}
+
+.footer button:disabled {
+  background-color: gray !important;
+}
+
+.footer button:hover {
+  background-color: #aa2aff;
+}
+
+.footer p {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #000;
+}
+
+.footer p span a {
+  font-weight: bold;
+  color: #9900ff;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-size: 1.9rem;
+}
+
+.verse{
+  position: absolute;
+  padding-left: 50%;
+  right : 0.2em ;
+  font-family: 'Play';
+  color: rgb(0, 63, 73);
+  text-align: center;
+  font-weight: -4rem;
+  user-select: none; 
+}
+
+.toto {
+  color: #dedede;
+  font-size: 26px;
+  font-family: 'Anonymous Pro', monospace;
+  border-right: 1px solid #dedede;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typewriter 8s steps(50) 0.5s 1 normal both, cursorblink 0.5s infinite;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 14.5em;
+  }
+}
+@keyframes cursorblink {
+  from {
+    border-right: 1px solid #dedede;
+  }
+  to {
+    border-right: 1px solid #666;
+  }
+}
+
+
+
+.heading{
+  font-size: 5rem;
+}
+
+.TYP {
+  font-size: 4rem;
+}
+
