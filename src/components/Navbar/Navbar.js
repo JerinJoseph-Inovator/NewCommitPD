@@ -1,15 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 
 function Navbar({ name }) {
+  const navigate = useNavigate();
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
         console.info("Signed Out User");
+        navigate('/login');
       })
       .catch((error) => {
         // An error happened.
