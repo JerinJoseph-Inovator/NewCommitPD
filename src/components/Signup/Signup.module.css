@@ -1,12 +1,12 @@
 .container {
-   padding: 0;
+  padding: 0;
   height: 100%;
   min-height: 100vh;
   width: 100%;
   background-image: url(./marc-olivier-jodoin-TStNU7H4UEE-unsplash.jpg);
-  backdrop-filter: le; 
+  backdrop-filter: le;
   position: absolute;
-  top: 0; 
+  top: 0;
   /* Navigation */
   z-index: -1;
   background-size: cover;
@@ -24,7 +24,7 @@
   margin-left: 2%;
   background: transparent;
   backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, .2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   padding: 30px;
   border-radius: 10px;
@@ -84,28 +84,27 @@
   font-size: 1.9rem;
 }
 
-.verse{
-  
-  
+.verse {
   position: absolute;
   padding-left: 50%;
   z-index: -1;
-  right : 0.2em ;
-  font-family: 'Play';
+  right: 0.2em;
+  font-family: "Play";
   color: rgb(0, 63, 73);
   text-align: center;
   font-weight: -4rem;
-  user-select: none; 
+  user-select: none;
 }
 
 .toto {
   color: #dedede;
   font-size: 26px;
-  font-family: 'Anonymous Pro', monospace;
+  font-family: "Anonymous Pro", monospace;
   border-right: 1px solid #dedede;
   white-space: nowrap;
   overflow: hidden;
-  animation: typewriter 8s steps(50) 0.5s 1 normal both, cursorblink 0.5s infinite;
+  animation: typewriter 8s steps(50) 0.5s 1 normal both,
+    cursorblink 0.5s infinite;
 }
 @keyframes typewriter {
   from {
@@ -124,9 +123,7 @@
   }
 }
 
-
-
-.heading{
+.heading {
   font-size: 5rem;
 }
 

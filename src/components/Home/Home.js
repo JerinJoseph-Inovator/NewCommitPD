@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Home.module.css";
+import { useState, useEffect } from "react";
 import {
   ref,
   uploadBytes,
@@ -8,131 +7,128 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { storage } from "../../firebase";
-import DisplayImage from "../DisplayImage/DisplayImage"
+
+import DisplayImage from "../DisplayImage/DisplayImage";
+import styles from "./Home.module.css";
 
 function Home({ userId }) {
   const [imageUpload, setImageUpload] = useState(null);
+
+  const [resultImageURL, setResultImgURL] = useState("");
+  const [uploadImageURL, setUploadImgURL] = useState("");
+
   const [imageList, setImageList] = useState([]);
-  const [imageURL, setImageURL] = useState("");
   const [imageListRef, setImageListRef] = useState(null);
-  console.log("User ID", userId);
-  // DRAG AND DROP CODE HERE
-  const [files, setFiles] = useState([])
-
-  const handleDrop = (event) => {
-  event.preventDefault();
-  const { files } = event.dataTransfer;
-  if (files.length > 0) {
-    setFiles([...files]);
-  }
-}
-  
-  const handleDragOver = (event) => {
-    event.preventDefault()
-  }
-
-   const handleDragStart = (event) => {
-        event.dataTransfer.setData("text/plain", event.target.id)
-    }
-    // DRAG AND DROP CODE END HERE
 
   const handleUpload = () => {
     if (imageUpload == null) return;
-    //const imageRef = ref(storage, `${userId}/results/${imageUpload.name}`);
-    const imageRef = ref(storage, `${userId}/uploads/${imageUpload.name}${Math.random()*10000000}.jpg`);
+    const imageRef = ref(storage, `${userId}/uploads/${imageUpload.name}`);
 
     uploadBytes(imageRef, imageUpload).then((snapShot) => {
-      getDownloadURL(snapShot.ref)
-      .then((url) => {
-        setImageURL(url);
-        console.log(url);
+      getDownloadURL(snapShot.ref).then((url) => {
+        setUploadImgURL(url);
       });
     });
   };
 
   const handleGenerate = (url, userId) => {
-    fetch(
-      `https://pyhplasticdetection.azurewebsites.net/api/httptrigger1pypld?image=${url}&userId=${userId}`
-    );
+    try {
+      fetch(
+        `https://pyhplasticdetection.azurewebsites.net/api/httptrigger1pypld?imgz=${url}&uuid=${userId}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          //extract your results here. i.e after your cloud function runs
+          setResultImgURL("");
+          return data;
+        });
+    } catch (error) {
+      console.error("Error in cloud function: ", error);
+    }
   };
 
   const handleDelete = (url) => {
-    console.log("Delete Image", url);
     const fileRef = ref(storage, url);
+    const indexOfURL = imageList.indexOf(url);
     deleteObject(fileRef)
       .then(() => {
         // File deleted successfully
-        console.log("file deleted");
+        setImageList((imageList) => imageList.splice(indexOfURL, 1));
+        console.warn("file deleted", fileRef);
       })
       .catch((error) => {
         // Uh-oh, an error occurred!
-        console.log("ERROR: ", error);
+        console.error("ERROR: ", error);
       });
+  };
+
+  const handleSelect = (url) => {
+    setUploadImgURL(url);
   };
 
   useEffect(() => {
     if (!userId) return;
     setImageListRef(ref(storage, `${userId}/uploads/`));
-  }, [userId, imageURL]);
+  }, [userId, uploadImageURL]);
 
   useEffect(() => {
     if (!imageListRef) return;
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
+          if (imageList.includes(url)) return;
           setImageList((imageList) => [...imageList, url]);
         });
       });
     });
-  }, [imageListRef]);
+  }, [imageList, imageListRef]);
 
   return (
     <>
       <div className={styles.homeContainer}>
         <div className={styles.buttonsContainer}>
-            <div className={styles.uploadsBtnContainer}>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImageUpload(e.target.files[0])}
-              ></input>
-              <button
-                style={{ padding: "5px 25px", margin: 25 }}
-                onClick={handleUpload}
-                disabled={userId ? false : true}
-              >
-                Upload
-              </button>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageUpload(e.target.files[0])}
+          ></input>
+          <button onClick={handleUpload} disabled={userId ? false : true}>
+            Upload
+          </button>
 
-              <button
-                style={{ padding: "5px 25px", margin: 25, width: 250 }}
-                onClick={handleGenerate}
-              >
-                Generate
-              </button>
-            </div>
-
-          <div className={styles.uploadImageContainer}>
-{/* FILE UPLOAD HERE */}
-<div className = "file-upload-div" onDrop = {handleDrop} onDragOver = {handleDragOver}>
-           Add file upload display here
-    </div>
-{/* FILE UPLOAD END HERE */}
-            {true ? (
-              <DisplayImage uploadedImage={imageURL} />
-            ) : (
-              <h1>Upload an Image</h1>
-            )}
-          </div>
+          <button
+            style={{ width: 250 }}
+            onClick={() => handleGenerate(uploadImageURL, userId)}
+          >
+            Generate
+          </button>
+        </div>
+        <div className={styles.uploadImageContainer}>
+          {userId ? (
+            <DisplayImage
+              uploadedImage={uploadImageURL}
+              resultImage={resultImageURL}
+            />
+          ) : (
+            <h1>Upload an Image</h1>
+          )}
         </div>
 
         <div className={styles.showUploadsContainer}>
           <h3>Be The Change </h3>
           {imageList.map((url, id) => {
             return (
-              <div key={id}>
-                <img src={url} height={"250px"} style={{ margin: 25 }} />
+              <div className={styles.uploadedImages} key={id}>
+                <img
+                  alt="uploaded"
+                  src={url}
+                  height={"250px"}
+                  style={{ margin: 25 }}
+                />
                 <button onClick={() => handleDelete(url)}>Delete image</button>
+                <button onClick={() => handleSelect(url)}>Select image</button>
               </div>
             );
           })}

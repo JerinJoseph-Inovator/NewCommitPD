@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { app, db } from "../../firebase";
-import { collection, addDoc } from 'firebase/firestore';
-import Typewriter from "typewriter-effect";
-import InputControl from "../InputControl/InputControl";
+
 import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+import Typewriter from "typewriter-effect";
+
+import InputControl from "../InputControl/InputControl";
 import styles from "./Signup.module.css";
-import { data } from "jquery";
 
 function Signup() {
   const navigate = useNavigate();
@@ -19,8 +19,6 @@ function Signup() {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  const database = collection(db, 'users',)
-  const collectionRef = collection(db, 'users');
 
   const handleSubmission = () => {
     if (!values.name || !values.email || !values.pass) {
@@ -28,7 +26,6 @@ function Signup() {
       return;
     }
     setErrorMsg("");
-
     setSubmitButtonDisabled(true);
     createUserWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
@@ -37,17 +34,6 @@ function Signup() {
         await updateProfile(user, {
           displayName: values.name,
         });
-// NEW CODE HERE 
-
-        addDoc(database, values)
-          .then(() => {
-          alert("Data Added")
-            })
-          .catch((err) => {
-            alert('Error adding document:', err);
-            });
-
-// NEW CODE END HERE        
         navigate("/");
       })
       .catch((err) => {
@@ -60,7 +46,6 @@ function Signup() {
     <div className={styles.container}>
       <div className={styles.innerBox}>
         <h1 className={styles.heading}>Signup</h1>
-
 
         <InputControl
           label="Name"
@@ -101,20 +86,22 @@ function Signup() {
         </div>
       </div>
       <span className={styles.verse}>
-      
-      <span lassName={styles.type_writer_text}>
-          
+        <span lassName={styles.type_writer_text}>
           <div className={styles.TYP}>
-              <Typewriter
-                  onInit={(typewriter) => {
-                      typewriter
-                          .typeString("Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed.")
-                          .pauseFor(10000)
-                          .deleteAll()
-                          .typeString("Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed.")
-                          .start();
-                  }}
-              />
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter
+                  .typeString(
+                    "Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed."
+                  )
+                  .pauseFor(10000)
+                  .deleteAll()
+                  .typeString(
+                    "Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed."
+                  )
+                  .start();
+              }}
+            />
           </div>
         </span>
       </span>

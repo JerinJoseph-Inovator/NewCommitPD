@@ -4,6 +4,7 @@ body {
 
 .homeContainer {
   height: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -13,14 +14,15 @@ body {
 
 .buttonsContainer {
   margin: 100px 0;
-  padding-inline: 100;
-}
-
-.uploadsBtnContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+}
+
+.buttonsContainer button, input {
+  padding: 5px 25px;
+  margin: 25px;
 }
 
 .uploadImageContainer {
@@ -29,9 +31,14 @@ body {
   place-items: center;
 }
 
-.file-upload-div{
-  width: 300px;
-  border: 15px solid green;
-  padding: 50px;
-  margin: 20px;
+.uploadedImages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
 }
+
+.uploadedImages button {
+  width: 200px;
+}
+
