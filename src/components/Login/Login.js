@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import $ from "jquery"
-//importing typewriter-effect
-import Typewriter from "typewriter-effect";
-import './Login.css';
 
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import Typewriter from "typewriter-effect";
 
 import InputControl from "../InputControl/InputControl";
-import { auth } from "../../firebase";
 
 import styles from "./Login.module.css";
 
@@ -20,9 +18,8 @@ function Login() {
   });
   const [errorMsg, setErrorMsg] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  
+
   const handleSubmission = () => {
-    console.log("Handle submission");
     if (!values.email || !values.pass) {
       setErrorMsg("Fill all fields");
       return;
@@ -33,7 +30,7 @@ function Login() {
     signInWithEmailAndPassword(auth, values.email, values.pass)
       .then(async (res) => {
         setSubmitButtonDisabled(false);
-        
+
         navigate("/");
       })
       .catch((err) => {
@@ -45,21 +42,24 @@ function Login() {
     <div className={styles.container}>
       <h1 className={styles.verse}>
         <span lassName={styles.type_writer_text}>
-          
-        <div className={styles.TYP}>
+          <div className={styles.TYP}>
             <Typewriter
-                onInit={(typewriter) => {
-                    typewriter
-                        .typeString("Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed.")
-                        .pauseFor(10000)
-                        .deleteAll()
-                        .typeString("Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed.")
-                        .start();
-                }}
+              onInit={(typewriter) => {
+                typewriter
+                  .typeString(
+                    "Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed."
+                  )
+                  .pauseFor(10000)
+                  .deleteAll()
+                  .typeString(
+                    "Be the change you want to be, for within your actions lies the power to ignite a brighter path and inspire a world transformed."
+                  )
+                  .start();
+              }}
             />
-        </div>
-      </span>
-      </h1> 
+          </div>
+        </span>
+      </h1>
       <div className={styles.innerBox}>
         <h1 className={styles.heading}>Login</h1>
 
@@ -85,12 +85,12 @@ function Login() {
           <button disabled={submitButtonDisabled} onClick={handleSubmission}>
             Login
           </button>
-          <p>
-            Don't have an account?{" "}
+          <p style={{ color: "white" }}>
+            Don't have an account?
             <span>
-              <Link to="/signup">Sign up </Link>
+              <Link to="/signup"> Sign up </Link>
             </span>
-          Today!
+            Today!
           </p>
         </div>
       </div>

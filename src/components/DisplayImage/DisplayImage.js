@@ -1,16 +1,16 @@
 import React from 'react'
 import "./DisplayImage.css"
 
-function DisplayImage({ uploadedImage }) {
+function DisplayImage({ uploadedImage, resultImageURL }) {
   return (
-    <div class="wrapper" >
+    <div className="wrapper">
       <div>
         <h3>Uploaded Image Here</h3>
-        <img src={uploadedImage} height={"100%"} />
+        <img alt="upload" src={uploadedImage} height={"100%"} />
       </div>
       <div>
         <h3>Result Image Here</h3>
-        <img src={uploadedImage} height={"100%"} />
+        <img alt="result" src={resultImageURL} height={"100%"} />
       </div>
       <div>
         <h3>Some text here</h3>

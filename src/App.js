@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./components/Home/Home";
@@ -9,13 +9,9 @@ import PlasticDetection from "./components/PlasticDetection/PlasticDetection";
 
 import { auth } from "./firebase";
 
-import "./App.css";
-
 function App() {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-
-  console.log("userId", userId);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -24,7 +20,7 @@ function App() {
         setUserName(user.displayName);
       } else setUserName("");
     });
-  }, []);
+  }, [userName]);
 
   return (
     <div className="App">
@@ -34,7 +30,11 @@ function App() {
           <Route path="/" element={<Home userId={userId} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/PlasticDetection" element={<PlasticDetection />} />
+          {userId ? (
+            <Route path="/PlasticDetection" element={<PlasticDetection />} />
+          ) : (
+            <Route path="/PlasticDetection" element={<Login />} />
+          )}
         </Routes>
       </Router>
     </div>

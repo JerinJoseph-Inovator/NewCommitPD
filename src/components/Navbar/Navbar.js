@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import {auth} from "../../firebase"
+import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 
 function Navbar({ name }) {
@@ -9,17 +9,15 @@ function Navbar({ name }) {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("Signed Out")
+        console.info("Signed Out User");
       })
       .catch((error) => {
         // An error happened.
-        console.log('Signout Error: ', error);
+        console.error("Signout Error: ", error);
       });
   };
 
   return (
-    <>
-    
     <nav className={styles.navbar}>
       <div className={styles.logoContainer}>
         <h1 className={styles.logo}>Plastic Detection</h1>
@@ -40,9 +38,6 @@ function Navbar({ name }) {
         </ul>
       )}
     </nav>
-    
-   
-</>
   );
 }
 
