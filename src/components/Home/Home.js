@@ -10,39 +10,48 @@ import { storage } from "../../firebase";
 
 import DisplayImage from "../DisplayImage/DisplayImage";
 import styles from "./Home.module.css";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 function Home({ userId }) {
   const [imageUpload, setImageUpload] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const [resultImageURL, setResultImgURL] = useState("");
   const [uploadImageURL, setUploadImgURL] = useState("");
+  const [resultImageURL, setResultImgURL] = useState("");
 
   const [imageList, setImageList] = useState([]);
-  const [resultList, setResultList] = useState([]);
-
   const [imageListRef, setImageListRef] = useState(null);
-  const [resultImageListRef, setResultImageListRef] = useState(null);
 
 
   const handleUpload = () => {
+    setResultImgURL("");
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `https://storage.googleapis.com/plastic-detection-598e8.appspot.com/${userId}/uploads/${imageUpload.name}`);
-
+    const imageRef = ref(
+      storage,
+      `https://storage.googleapis.com/plastic-detection-598e8.appspot.com/${userId}/uploads/${imageUpload.name}`
+    );
+    setLoading(true);
     uploadBytes(imageRef, imageUpload).then((snapShot) => {
       getDownloadURL(snapShot.ref).then((url) => {
         setUploadImgURL(url);
+        setLoading(false);
       });
     });
   };
 
   const handleGenerate = (url, userId) => {
-    const str = new URL(url)
-    const fetchURL = str.pathname.replace(
-      "/v0/b/plastic-detection-598e8.appspot.com/o/",
-      "https://storage.googleapis.com/plastic-detection-598e8.appspot.com/"
-    );
-    console.log("Fetch: ", fetchURL, userId);
+    setLoading(true);
+    const str = new URL(url);
+    const fetchURL = url.includes(
+      "/v0/b/plastic-detection-598e8.appspot.com/o/"
+    )
+      ? str.pathname.replace(
+          "/v0/b/plastic-detection-598e8.appspot.com/o/",
+          "https://storage.googleapis.com/plastic-detection-598e8.appspot.com/"
+        )
+      : url;
     try {
+      setLoading(true);
       fetch(
         `http://plastic-detection.eastus.cloudapp.azure.com/?imgz=${fetchURL}&uuid=${userId}`,
         {
@@ -54,48 +63,65 @@ function Home({ userId }) {
         }
       )
         .then((response) => {
-          console.log(response)
           return response.json();
         })
         .then((data) => {
           //extract your results here. i.e after your cloud function runs
-          console.log("Result", data.public_url);
-          setResultImgURL(data.public_url);
+          setResultImgURL(() => `${data.public_url}`);
+          setLoading(false);
           return data;
         });
     } catch (error) {
+      setLoading(false);
       console.error("Error: ", error);
     }
   };
 
-  const handleDelete = (url) => {
-    const fileRef = ref(storage, url);
+  const handleDelete = async (url) => {
+    const uploadFileRef = ref(storage, url);
+    const resultFileRef = ref(storage, url.replace("uploads", "results"));
+    setLoading(true);
+    setUploadImgURL("");
+    setResultImgURL("");
+    //delete file from uploads folder
     const indexOfURL = imageList.indexOf(url);
-    deleteObject(fileRef)
+    await deleteObject(uploadFileRef)
       .then(() => {
         // File deleted successfully
         setImageList((imageList) => imageList.splice(indexOfURL, 1));
-        console.warn("file deleted", fileRef);
+        console.warn("file deleted", uploadFileRef);
       })
       .catch((error) => {
         // Uh-oh, an error occurred!
         console.error("ERROR: ", error);
       });
+
+    //delete file from results folder
+    await deleteObject(resultFileRef)
+      .then(() => {
+        // File deleted successfully
+        console.warn("file deleted", resultFileRef);
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
+        console.error("ERROR: ", error);
+      });
+    setLoading(false);
   };
 
   const handleSelect = (url) => {
     setUploadImgURL(url);
+    setResultImgURL(url.replace("uploads", "results"));
   };
 
   useEffect(() => {
     if (!userId) return;
     setImageListRef(ref(storage, `${userId}/uploads/`));
-    setResultImageListRef(ref(storage, `${userId}/results/`));
-
   }, [userId, uploadImageURL]);
 
   useEffect(() => {
     if (!imageListRef) return;
+    setLoading(true);
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
@@ -103,24 +129,17 @@ function Home({ userId }) {
           setImageList([...imageList, url]);
         });
       });
+      setLoading(false);
     });
   }, [imageList, imageListRef]);
 
-   useEffect(() => {
-     if (!resultImageListRef) return;
-     listAll(resultImageListRef).then((response) => {
-       response.items.forEach((item) => {
-         getDownloadURL(item).then((url) => {
-           if (resultList.includes(url)) return;
-           setResultList([...resultList, url]);
-         });
-       });
-     });
-   }, [resultList, resultImageListRef]);
-
   return (
     <>
-      <div className={styles.homeContainer}>
+      {loading && <LoadingSpinner />}
+      <div
+        className={styles.homeContainer}
+        style={loading ? { overflow: "hidden" } : {}}
+      >
         <div className={styles.buttonsContainer}>
           <input
             type="file"
@@ -133,7 +152,9 @@ function Home({ userId }) {
 
           <button
             style={{ width: 250 }}
-            onClick={() => handleGenerate(uploadImageURL, userId)}
+            onClick={() => {
+              handleGenerate(uploadImageURL, userId);
+            }}
           >
             Generate
           </button>
@@ -152,38 +173,26 @@ function Home({ userId }) {
         <div className={styles.showUploadsContainer}>
           <h3>Be The Change </h3>
           <h3>Uploads: </h3>
-          {imageList.map((url, id) => {
-            return (
-              <div className={styles.uploadedImages} key={id}>
-                <img
-                  alt="uploaded"
-                  src={url}
-                  height={"250px"}
-                  style={{ margin: 25 }}
-                />
-                <button onClick={() => handleDelete(url)}>Delete image</button>
-                <button onClick={() => handleSelect(url)}>Select image</button>
-              </div>
-            );
-          })}
-        </div>
-        <div className={styles.showUploadsContainer}>
-          <h3>Be The Change </h3>
-          <h3>Results: </h3>
-          {resultList.map((url, id) => {
-            return (
-              <div className={styles.uploadedImages} key={id}>
-                <img
-                  alt="results"
-                  src={url}
-                  height={"250px"}
-                  style={{ margin: 25 }}
-                />
-                <button onClick={() => handleDelete(url)}>Delete image</button>
-                <button onClick={() => handleSelect(url)}>Select image</button>
-              </div>
-            );
-          })}
+          <div>
+            {imageList.map((url, id) => {
+              return (
+                <div className={styles.uploadedImages} key={id}>
+                  <img
+                    alt="uploaded"
+                    src={url}
+                    height={"250px"}
+                    style={{ margin: 25 }}
+                  />
+                  <button onClick={() => handleDelete(url)}>
+                    Delete image
+                  </button>
+                  <button onClick={() => handleSelect(url)}>
+                    Select image
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
