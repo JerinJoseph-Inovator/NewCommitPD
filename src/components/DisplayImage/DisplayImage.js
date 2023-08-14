@@ -2,6 +2,8 @@ import React from 'react'
 import "./DisplayImage.css"
 
 function DisplayImage({ uploadedImage, resultImageURL }) {
+
+  console.log(resultImageURL)
   return (
     <div className="wrapper">
       <div>

@@ -31,9 +31,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {userId ? (
-            <Route path="/PlasticDetection" element={<PlasticDetection />} />
+            <Route path="/plastic-detection" element={<PlasticDetection />} />
           ) : (
-            <Route path="/PlasticDetection" element={<Login />} />
+            <Route path="/plastic-detection" element={<Login />} />
           )}
         </Routes>
       </Router>

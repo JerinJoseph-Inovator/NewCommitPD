@@ -18,7 +18,11 @@ function Home({ userId }) {
   const [uploadImageURL, setUploadImgURL] = useState("");
 
   const [imageList, setImageList] = useState([]);
+  const [resultList, setResultList] = useState([]);
+
   const [imageListRef, setImageListRef] = useState(null);
+  const [resultImageListRef, setResultImageListRef] = useState(null);
+
 
   const handleUpload = () => {
     if (imageUpload == null) return;
@@ -50,12 +54,13 @@ function Home({ userId }) {
         }
       )
         .then((response) => {
+          console.log(response)
           return response.json();
         })
         .then((data) => {
           //extract your results here. i.e after your cloud function runs
+          console.log("Result", data.public_url);
           setResultImgURL(data.public_url);
-          console.log("Result", data);
           return data;
         });
     } catch (error) {
@@ -85,6 +90,8 @@ function Home({ userId }) {
   useEffect(() => {
     if (!userId) return;
     setImageListRef(ref(storage, `${userId}/uploads/`));
+    setResultImageListRef(ref(storage, `${userId}/results/`));
+
   }, [userId, uploadImageURL]);
 
   useEffect(() => {
@@ -98,6 +105,18 @@ function Home({ userId }) {
       });
     });
   }, [imageList, imageListRef]);
+
+   useEffect(() => {
+     if (!resultImageListRef) return;
+     listAll(resultImageListRef).then((response) => {
+       response.items.forEach((item) => {
+         getDownloadURL(item).then((url) => {
+           if (resultList.includes(url)) return;
+           setImageList([...resultList, url]);
+         });
+       });
+     });
+   }, [resultList, resultImageListRef]);
 
   return (
     <>
@@ -132,11 +151,30 @@ function Home({ userId }) {
 
         <div className={styles.showUploadsContainer}>
           <h3>Be The Change </h3>
+          <h3>Uploads: </h3>
           {imageList.map((url, id) => {
             return (
               <div className={styles.uploadedImages} key={id}>
                 <img
                   alt="uploaded"
+                  src={url}
+                  height={"250px"}
+                  style={{ margin: 25 }}
+                />
+                <button onClick={() => handleDelete(url)}>Delete image</button>
+                <button onClick={() => handleSelect(url)}>Select image</button>
+              </div>
+            );
+          })}
+        </div>
+        <div className={styles.showUploadsContainer}>
+          <h3>Be The Change </h3>
+          <h3>Results: </h3>
+          {resultList.map((url, id) => {
+            return (
+              <div className={styles.uploadedImages} key={id}>
+                <img
+                  alt="results"
                   src={url}
                   height={"250px"}
                   style={{ margin: 25 }}
