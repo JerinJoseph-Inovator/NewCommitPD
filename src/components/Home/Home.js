@@ -112,7 +112,7 @@ function Home({ userId }) {
        response.items.forEach((item) => {
          getDownloadURL(item).then((url) => {
            if (resultList.includes(url)) return;
-           setImageList([...resultList, url]);
+           setResultList([...resultList, url]);
          });
        });
      });
