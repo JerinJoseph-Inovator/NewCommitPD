@@ -22,7 +22,7 @@ function Home({ userId }) {
 
   const handleUpload = () => {
     if (imageUpload == null) return;
-    const imageRef = ref(storage, `${userId}/uploads/${imageUpload.name}`);
+    const imageRef = ref(storage, `https://storage.googleapis.com/plastic-detection-598e8.appspot.com/${userId}/uploads/${imageUpload.name}`);
 
     uploadBytes(imageRef, imageUpload).then((snapShot) => {
       getDownloadURL(snapShot.ref).then((url) => {
@@ -34,7 +34,7 @@ function Home({ userId }) {
   const handleGenerate = (url, userId) => {
     try {
       fetch(
-        `https://pyhplasticdetection.azurewebsites.net/api/httptrigger1pypld?imgz=${url}&uuid=${userId}`
+        ` ?imgz=${url}&uuid=${userId}`
       )
         .then((response) => {
           return response.json();
