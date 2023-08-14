@@ -34,8 +34,8 @@ function Home({ userId }) {
   const handleGenerate = (url, userId) => {
     const str = new URL(url)
     const fetchURL = str.pathname.replace(
-      "/v0/b/reva2-aca6e.appspot.com/o/",
-      "https://storage.googleapis.com/reva2-aca6e.appspot.com/"
+      "/v0/b/plastic-detection-598e8.appspot.com/o/",
+      "https://storage.googleapis.com/plastic-detection-598e8.appspot.com/"
     );
     console.log("Fetch: ", fetchURL, userId);
     try {
@@ -54,7 +54,7 @@ function Home({ userId }) {
         })
         .then((data) => {
           //extract your results here. i.e after your cloud function runs
-          setResultImgURL("");
+          setResultImgURL(data.public_url);
           console.log("Result", data);
           return data;
         });

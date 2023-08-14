@@ -3,13 +3,14 @@ import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAz9Caozdz1xskiN52Y7m0YwJZNpECodoY",
-  authDomain: "reva2-aca6e.firebaseapp.com",
-  projectId: "reva2-aca6e",
-  storageBucket: "reva2-aca6e.appspot.com",
-  messagingSenderId: "1075386175986",
-  appId: "1:1075386175986:web:f6f07d3fe8dee8d1dc5b6b",
-  measurementId: "G-PQC5Q8DZB0",
+  apiKey: "AIzaSyCmz9FpNCDmSNP7l6B5QdJ_EiqK6CBafDU",
+  authDomain: "plastic-detection-598e8.firebaseapp.com",
+  databaseURL: "https://plastic-detection-598e8-default-rtdb.firebaseio.com",
+  projectId: "plastic-detection-598e8",
+  storageBucket: "plastic-detection-598e8.appspot.com",
+  messagingSenderId: "17850650140",
+  appId: "1:17850650140:web:2a7e233f3eaa50fca8d9d9",
+  measurementId: "G-93YTTTVMVG"
 };
 
 // Initialize Firebase
