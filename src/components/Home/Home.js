@@ -32,9 +32,22 @@ function Home({ userId }) {
   };
 
   const handleGenerate = (url, userId) => {
+    const str = new URL(url)
+    const fetchURL = str.pathname.replace(
+      "/v0/b/reva2-aca6e.appspot.com/o/",
+      "https://storage.googleapis.com/reva2-aca6e.appspot.com/"
+    );
+    console.log("Fetch: ", fetchURL, userId);
     try {
       fetch(
-        ` ?imgz=${url}&uuid=${userId}`
+        `http://plastic-detection.eastus.cloudapp.azure.com/?imgz=${fetchURL}&uuid=${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Request-Method": "GET",
+          },
+        }
       )
         .then((response) => {
           return response.json();
@@ -42,10 +55,11 @@ function Home({ userId }) {
         .then((data) => {
           //extract your results here. i.e after your cloud function runs
           setResultImgURL("");
+          console.log("Result", data);
           return data;
         });
     } catch (error) {
-      console.error("Error in cloud function: ", error);
+      console.error("Error: ", error);
     }
   };
 
