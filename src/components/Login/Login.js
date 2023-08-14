@@ -37,6 +37,7 @@ function Login() {
         setSubmitButtonDisabled(false);
         setErrorMsg(err.message);
       });
+      navigate("/login");
   };
   return (
     <div className={styles.container}>
