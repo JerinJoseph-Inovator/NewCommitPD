@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/plastic-detection/static/css/main.70999510.css",
+    "main.js": "/plastic-detection/static/js/main.297731ee.js",
+    "static/media/Scrollpage.jpg": "/plastic-detection/static/media/Scrollpage.1458906855720b018841.jpg",
+    "static/media/marc-olivier-jodoin-TStNU7H4UEE-unsplash.jpg": "/plastic-detection/static/media/marc-olivier-jodoin-TStNU7H4UEE-unsplash.a46177cbc91e52f7ed5e.jpg",
+    "index.html": "/plastic-detection/index.html",
+    "main.70999510.css.map": "/plastic-detection/static/css/main.70999510.css.map",
+    "main.297731ee.js.map": "/plastic-detection/static/js/main.297731ee.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.70999510.css",
+    "static/js/main.297731ee.js"
+  ]
+}
