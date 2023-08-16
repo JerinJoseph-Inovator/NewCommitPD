@@ -8,8 +8,10 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background: rgb(77, 81, 125);
-  background: radial-gradient(circle, rgba(77, 81, 125, 1) 33%, rgba(52, 49, 107, 1) 61%, rgba(46, 61, 80, 1) 88%, rgba(53, 65, 112, 1) 100%);
+  /* background: #0D0907; */
+  background: #0c0908;
+  /* background: rgb(77, 81, 125);
+  background: radial-gradient(circle, rgba(77, 81, 125, 1) 33%, rgba(52, 49, 107, 1) 61%, rgba(46, 61, 80, 1) 88%, rgba(53, 65, 112, 1) 100%); */
 }
 
 .buttonsContainer {

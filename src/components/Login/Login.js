@@ -37,7 +37,7 @@ function Login() {
         setSubmitButtonDisabled(false);
         setErrorMsg(err.message);
       });
-      navigate("/login");
+    navigate("/login");
   };
   return (
     <div className={styles.container}>
@@ -62,24 +62,33 @@ function Login() {
         </span>
       </h1>
       <div className={styles.innerBox}>
-        <h1 className={styles.heading}>Login</h1>
+        
+        <div className={styles.headingBox}>
+          <h2 className={styles.heading}>Login</h2>
+          <div className={styles.subheading}>Empowering change through AI:</div>
+          <div className={styles.subheading}>
+            Your gateway to a plastic-free tomorrow!
+          </div>
+        </div>
 
-        <InputControl
-          label="Email"
-          type="text"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, email: event.target.value }))
-          }
-          placeholder="Enter email address"
-        />
-        <InputControl
-          label="Password"
-          type="password"
-          onChange={(event) =>
-            setValues((prev) => ({ ...prev, pass: event.target.value }))
-          }
-          placeholder="Enter Password"
-        />
+        <span>
+          <InputControl
+            label="Email"
+            type="text"
+            onChange={(event) =>
+              setValues((prev) => ({ ...prev, email: event.target.value }))
+            }
+            placeholder="Enter email address"
+          />
+          <InputControl
+            label="Password"
+            type="password"
+            onChange={(event) =>
+              setValues((prev) => ({ ...prev, pass: event.target.value }))
+            }
+            placeholder="Enter Password"
+          />
+        </span>
 
         <div className={styles.footer}>
           <b className={styles.error}>{errorMsg}</b>

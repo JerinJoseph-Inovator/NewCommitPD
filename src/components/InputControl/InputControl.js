@@ -11,5 +11,5 @@ function InputControl(props) {
   );
 }
 
-document.body.style = "background: hsl(230, 17%, 14%);";
+document.body.style = "background: #0D0907";
 export default InputControl;

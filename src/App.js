@@ -30,8 +30,9 @@ function App() {
           <Route path="/" element={<Home userId={userId} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/PlasticDetection" element={<PlasticDetection />} />
           {userId ? (
-            <Route path="/plastic-detection" element={<PlasticDetection />} />
+            <Route path="/PlasticDetection" element={<PlasticDetection />} />
           ) : (
             <Route path="/plastic-detection" element={<Login />} />
           )}

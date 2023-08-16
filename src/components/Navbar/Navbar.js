@@ -24,6 +24,7 @@ function Navbar({ name }) {
     <nav className={styles.navbar}>
       <div className={styles.logoContainer}>
         <h1 className={styles.logo}>Plastic Detection</h1>
+        <p>A step towards brighter future</p>
       </div>
       {name ? (
         <div className={styles.welcomeContainer}>

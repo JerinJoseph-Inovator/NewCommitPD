@@ -1,23 +1,18 @@
+nav{
+  z-index: 100;
+}
+
 .navbar {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #a4508b;
-  background-image: linear-gradient(326deg, #a4508b 10%, #4b0c68 70%);
+  padding: 20px;
+  background-color: hsl(240, 27%, 8%);
+  /* Orginal BG */
+  /* background-color: hsl(230, 17%, 14%); */
   font-size: 125%;
   /* background: linear-gradient(225deg,  hsl(329, 70%, 58%), hsl(5, 77%, 71%) 50.91%, hsl(37, 97%, 70%)100%);  */
 }
-
-.logoContainer {
-  display: grid;
-  place-items: center;
-  margin-right: 50px;
-  border-color: #44002b;
-  box-shadow: 0 0.5em 0.5em -0.4em #450028;
-  transform: translateY(-0.2em);
-}
-
 .welcomeContainer {
   display: flex;
   justify-content: space-between;
@@ -34,17 +29,18 @@
   justify-content: space-between;
   min-width: 160px;
   list-style-type: none;
+  margin-right: 5.5em;
+  
 }
 
 .navbar ul li a {
   color: rgb(175, 143, 143);
   text-decoration: none;
   position: relative;
-  right: 40px;
+  top: 5px; 
   font-family: "Inter";
-  font-size: 2rem;
-  transition: border-color 0.75s, box-shadow 0.75s, transform 0.75s,
-    font-size 0.75s;
+  font-size: 1.75rem;
+  transition: border-color 0.75s, box-shadow 0.75s, transform 0.75s, font-size 0.75s;
 }
 .navbar ul li a:hover {
   border-color: #44002b;
@@ -53,7 +49,23 @@
   transform: translateY(-0.45em);
   font-size: 2.2rem;
 }
+
+.logoContainer {
+  display: grid;
+  place-items: center;
+  margin-right: 50px;
+  transform: translateY(-0.2em);
+} 
+
 .logo {
   color: beige;
-  font-size: 2.7rem;
+  font-size: 2rem;
+  margin-left: 3.1em;
+  font-family: "Orbitron";
+  letter-spacing: 4px;
+}
+
+.logoContainer p {
+  font-size: 1rem;
+  margin-left: 5em;
 }

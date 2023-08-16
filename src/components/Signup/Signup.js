@@ -45,8 +45,17 @@ function Signup() {
   return (
     <div className={styles.container}>
       <div className={styles.innerBox}>
-        <h1 className={styles.heading}>Signup</h1>
+        <div className={styles.headingBox}>
+          <h2 className={styles.heading}>Signup</h2>
+          <div className={styles.subheading}>Empowering change through AI:</div>
+          <div className={styles.subheading}>
+            Your gateway to a plastic-free tomorrow!
+          </div>
+        </div>
 
+
+
+      <span>
         <InputControl
           label="Name"
           placeholder="Enter your name"
@@ -71,13 +80,14 @@ function Signup() {
             setValues((prev) => ({ ...prev, pass: event.target.value }))
           }
         />
+        </span>
 
         <div className={styles.footer}>
           <b className={styles.error}>{errorMsg}</b>
           <button onClick={handleSubmission} disabled={submitButtonDisabled}>
             Signup
           </button>
-          <p>
+          <p style={{ color: "white" }}>
             Already have an account?{" "}
             <span>
               <Link to="/login">Login</Link>

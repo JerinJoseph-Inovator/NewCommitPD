@@ -12,6 +12,7 @@ import {
 } from "react-scroll-motion";
 
 import "./PlasticDetection.css";
+import Myimage from "./Scrollpage.jpg";
 
 const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
 const FadeUp = batch(Fade(), Sticky());
@@ -61,7 +62,7 @@ export default function PlasticDetection() {
           <div className="section-1">
             <Animator animation={ZoomIn()}>
               <div className="left">
-                <img alt="platic bottle" src="https://images.unsplash.com/photo-1586041828039-b8d193d6d1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" />
+                <img alt="platic" src={Myimage}/>
               </div>
             </Animator>
             <div className="right">
@@ -84,3 +85,4 @@ export default function PlasticDetection() {
     </div>
   );
 }
+
