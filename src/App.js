@@ -27,14 +27,14 @@ function App() {
       <Router>
         <Navbar name={userName} />
         <Routes>
-          <Route path="/" element={<Home userId={userId} />} />
+          <Route path="/" element={<PlasticDetection />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/PlasticDetection" element={<PlasticDetection />} />
+          <Route path="/Home" element={<Home userId={userId} />}/>
           {userId ? (
-            <Route path="/PlasticDetection" element={<PlasticDetection />} />
+            <Route path="/PlasticDetection"  element={<Home userId={userId} />}/>
           ) : (
-            <Route path="/plastic-detection" element={<Login />} />
+            <Route path="/PlasticDetection" element={<Login />} />
           )}
         </Routes>
       </Router>
