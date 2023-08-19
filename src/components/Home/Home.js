@@ -53,7 +53,7 @@ function Home({ userId }) {
     try {
       setLoading(true);
       fetch(
-        `http://plastic-detection.eastus.cloudapp.azure.com/?imgz=${fetchURL}&uuid=${userId}`,
+        `https://plastic-detection.eastus.cloudapp.azure.com/?imgz=${fetchURL}&uuid=${userId}`,
         {
           method: "GET",
           headers: {
