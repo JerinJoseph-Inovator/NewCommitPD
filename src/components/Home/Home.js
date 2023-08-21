@@ -161,9 +161,9 @@ function Home({ userId }) {
             onClick={() => {
               handleGenerate(uploadImageURL, userId);
             }}>
-            <div className={styles.left}></div>
+           
             Detect Plastic!   
-            <div className={styles.right}></div>
+            
         </button>
 
         </div>
