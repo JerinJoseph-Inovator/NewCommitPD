@@ -133,6 +133,7 @@ function Home({ userId }) {
     });
   }, [imageList, imageListRef]);
 
+
   return (
     <>
       {loading && <LoadingSpinner />}
@@ -140,24 +141,31 @@ function Home({ userId }) {
         className={styles.homeContainer}
         style={loading ? { overflow: "hidden" } : {}}
       >
-        <div className={styles.buttonsContainer}>
+        <div className={styles.buttonsContainer} for = "upl">
+          <div className={styles.ChooseFile}>
           <input
             type="file"
+            id="upload"
             accept="image/*"
             onChange={(e) => setImageUpload(e.target.files[0])}
-          ></input>
-          <button onClick={handleUpload} disabled={userId ? false : true}>
-            Upload
+            ></input>
+            <label for="upload">Choose File</label>
+          </div>
+          <button onClick={handleUpload} disabled={userId ? false : true} className = {styles.uploadbtn}>
+            Confirm & Upload <br></br> your Image
           </button>
 
+          
           <button
-            style={{ width: 250 }}
+            className= {styles.pid}
             onClick={() => {
               handleGenerate(uploadImageURL, userId);
-            }}
-          >
-            Generate
-          </button>
+            }}>
+            <div className={styles.left}></div>
+            Detect Plastic!   
+            <div className={styles.right}></div>
+        </button>
+
         </div>
         <div className={styles.uploadImageContainer}>
           {userId ? (
@@ -171,7 +179,6 @@ function Home({ userId }) {
         </div>
 
         <div className={styles.showUploadsContainer}>
-          <h3>Be The Change </h3>
           <h3>Uploads: </h3>
           <div>
             {imageList.map((url, id) => {
