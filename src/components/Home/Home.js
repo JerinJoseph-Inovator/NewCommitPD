@@ -67,10 +67,9 @@ function Home({ userId }) {
           return response.json();
         })
         .then((data) => {
-          console.log("DATA: ",data);
           //extract your results here. i.e after your cloud function runs
           setResultImgURL(() => `${data.public_url}`);
-          setGeoTag(data.geoTag);
+          setGeoTag(data.geo_tag);
 
           setLoading(false);
           return data;
