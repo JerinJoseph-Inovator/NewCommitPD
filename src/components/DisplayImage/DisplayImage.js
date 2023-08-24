@@ -1,7 +1,7 @@
 import React from 'react'
 import "./DisplayImage.css"
 
-function DisplayImage({ uploadedImage, resultImage }) {
+function DisplayImage({ uploadedImage, resultImage, geoTag }) {
 
   return (
     <div className="wrapper">
@@ -15,6 +15,8 @@ function DisplayImage({ uploadedImage, resultImage }) {
       </div>
       <div>
         <h3>Geo Tag:</h3>
+
+        <p>{geoTag}</p>
       </div>
     </div>
   );

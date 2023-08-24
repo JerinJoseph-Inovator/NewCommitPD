@@ -18,6 +18,7 @@ function Home({ userId }) {
 
   const [uploadImageURL, setUploadImgURL] = useState("");
   const [resultImageURL, setResultImgURL] = useState("");
+  const [geoTag, setGeoTag] = useState("");
 
   const [imageList, setImageList] = useState([]);
   const [imageListRef, setImageListRef] = useState(null);
@@ -66,8 +67,11 @@ function Home({ userId }) {
           return response.json();
         })
         .then((data) => {
+          console.log("DATA: ",data);
           //extract your results here. i.e after your cloud function runs
           setResultImgURL(() => `${data.public_url}`);
+          setGeoTag(data.geoTag);
+
           setLoading(false);
           return data;
         });
@@ -172,6 +176,7 @@ function Home({ userId }) {
             <DisplayImage
               uploadedImage={uploadImageURL}
               resultImage={resultImageURL}
+              geoTag={geoTag}
             />
           ) : (
             <h1>Upload an Image</h1>
