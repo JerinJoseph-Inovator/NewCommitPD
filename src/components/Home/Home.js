@@ -19,6 +19,8 @@ function Home({ userId }) {
   const [uploadImageURL, setUploadImgURL] = useState("");
   const [resultImageURL, setResultImgURL] = useState("");
   const [geoTag, setGeoTag] = useState("");
+  const [num_plastic, setnum_plastic] = useState("");
+  const [Total_distance, setTotal_distance] = useState("");
 
   const [imageList, setImageList] = useState([]);
   const [imageListRef, setImageListRef] = useState(null);
@@ -70,7 +72,8 @@ function Home({ userId }) {
           //extract your results here. i.e after your cloud function runs
           setResultImgURL(() => `${data.public_url}`);
           setGeoTag(data.geo_tag);
-
+          setnum_plastic(data.num_plastic);
+          setTotal_distance(data.Total_distance);
           setLoading(false);
           return data;
         });
@@ -138,13 +141,13 @@ function Home({ userId }) {
 
 
   return (
-    <>
+    <div style={{ padding: '25px' }}>
       {loading && <LoadingSpinner />}
       <div
         className={styles.homeContainer}
         style={loading ? { overflow: "hidden" } : {}}
       >
-        <div className={styles.buttonsContainer} for = "upl">
+        <div className={styles.buttonsContainer} for = "upl" >
           <div className={styles.ChooseFile}>
           <input
             type="file"
@@ -176,6 +179,8 @@ function Home({ userId }) {
               uploadedImage={uploadImageURL}
               resultImage={resultImageURL}
               geoTag={geoTag}
+              num_plastic={num_plastic}
+              Total_distance={Total_distance}
             />
           ) : (
             <h1>Upload an Image</h1>
@@ -206,7 +211,7 @@ function Home({ userId }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
